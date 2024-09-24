@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rompecabezas</title>
+    <link rel ="stylesheet" href ="style.css">
+    <style>
+        #puzzle {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+        }
+        .tile {
+            width: 100px;
+            height: 100px;
+            font-size: 40px;
+            text-align: center;
+            line-height: 100px;
+            background-color: rgb(43, 74, 160);
+            border: 2px solid black;
+        }
+        .empty {
+            background-color: white;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap" rel="stylesheet">
+</head>
+ 
+<body>  
+    
+<div class="container text-center">
+  <div class="row align-items-center">
+    <div class="col">
+        <div class="container">
+        <img src="1234.png"
+        class="right-image"/>
+        <div class="content"> 
+        </div>
+        <center></center>
+    <div class="col">
+        
+        <h1>R O M P E C A B E Z A S</h1>
+        <center>
+       <div id="puzzle">
+        
+            <div class="tile">1</div>
+            <div class="tile">2</div>
+            <div class="tile">3</div>
+            <div class="tile">4</div>
+            <div class="tile">5</div>
+            <div class="tile">6</div>
+            <div class="tile">7</div>
+            <div class="tile">8</div>
+            <div class="tile empty"></div>
+        </div> 
+        
+        <button id="start-voice">Comenzar Voz</button>
+    </center>
+        <script>
+            const puzzle = document.getElementById('puzzle');
+            const tiles = Array.from(puzzle.children);
+        
+            function swapTiles(tile1, tile2) {
+                const tempText = tile1.textContent;
+                tile1.textContent = tile2.textContent;
+                tile2.textContent = tempText;
+                tile1.classList.toggle('empty');
+                tile2.classList.toggle('empty');
+            }
+        
+            function moveTile(direction) {
+                const emptyTile = document.querySelector('.empty');
+                const emptyIndex = tiles.indexOf(emptyTile);
+                let targetIndex = null;
+        
+                if (direction === 'arriba' && emptyIndex < 6) targetIndex = emptyIndex + 3;
+                if (direction === 'abajo' && emptyIndex > 2) targetIndex = emptyIndex - 3;
+                if (direction === 'izquierda' && emptyIndex % 3 < 2) targetIndex = emptyIndex + 1;
+                if (direction === 'derecha' && emptyIndex % 3 > 0) targetIndex = emptyIndex - 1;
+        
+                if (targetIndex !== null) {
+                    swapTiles(emptyTile, tiles[targetIndex]);
+                }
+            }
+        
+            // Reconocimiento de voz usando la Web Speech API
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'es-ES';
+        
+            recognition.onresult = function(event) {
+                const command = event.results[0][0].transcript.toLowerCase();
+                console.log('Comando de voz:', command);
+        
+                if (['arriba', 'abajo', 'izquierda', 'derecha'].includes(command)) {
+                    moveTile(command);
+                } else {
+                    console.log('Comando no reconocido.');
+                }
+            };
+        
+            recognition.onend = function() {
+                recognition.start(); // Para que siga escuchando
+            };
+        
+            document.getElementById('start-voice').addEventListener('click', () => {
+                recognition.start(); // Iniciar reconocimiento de voz
+                console.log('Reconocimiento de voz iniciado.');
+            });
+        </script>
+            </div>
+    <div class="col">
+        <div class="container">
+        <img src="1234.png"
+        class="right-image"/>
+        <div class="content">     </div>
+  </div>
+</div>
+</body>
+</html>
