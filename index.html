@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="1234.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>Rompecabezas</title>
     <link rel ="stylesheet" href ="style.css">
     <style>
@@ -21,7 +22,7 @@
             border: 2px solid black;
         }
         .empty {
-            background-color: white;
+            background-color: rgb(240, 26, 26);
         }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,26 +40,27 @@
         class="right-image"/>
         <div class="content"> 
         </div>
-        <center></center>
+        
     <div class="col">
         
-        <h1>R O M P E C A B E Z A S</h1>
-        <center>
+        <h1>R O M P E C A B E Z A S  </h1>
+        <h2>N U M É R I C O   </h2>
+
        <div id="puzzle">
         
             <div class="tile">1</div>
-            <div class="tile">2</div>
             <div class="tile">3</div>
-            <div class="tile">4</div>
             <div class="tile">5</div>
-            <div class="tile">6</div>
             <div class="tile">7</div>
+            <div class="tile">2</div>
+            <div class="tile">4</div>
+            <div class="tile">6</div>
             <div class="tile">8</div>
             <div class="tile empty"></div>
         </div> 
         
         <button id="start-voice">Comenzar Voz</button>
-    </center>
+  
         <script>
             const puzzle = document.getElementById('puzzle');
             const tiles = Array.from(puzzle.children);
@@ -85,8 +87,6 @@
                     swapTiles(emptyTile, tiles[targetIndex]);
                 }
             }
-        
-            // Reconocimiento de voz usando la Web Speech API
             const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
             recognition.lang = 'es-ES';
         
@@ -100,13 +100,11 @@
                     console.log('Comando no reconocido.');
                 }
             };
-        
             recognition.onend = function() {
-                recognition.start(); // Para que siga escuchando
+                recognition.start(); 
             };
-        
             document.getElementById('start-voice').addEventListener('click', () => {
-                recognition.start(); // Iniciar reconocimiento de voz
+                recognition.start(); 
                 console.log('Reconocimiento de voz iniciado.');
             });
         </script>
